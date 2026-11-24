@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Menad AZOUAOU | Étudiant Zone01</title>
+
+    <meta
+        name="description"
+        content="Voici mon portfolio de développeur étudiant chez Zone01. Découvrez mes projets, mes compétences et mon parcours."
+    >
+
+    <style>
+        /* ========================================
+           1. CONFIGURATION GÉNÉRALE
+        ======================================== */
+
+        :root {
+            --background: #080b0a;
+            --background-light: #0d120f;
+            --surface: #101713;
+            --surface-hover: #151e18;
+
+            --green: #39ff88;
+            --green-dark: #19c765;
+            --green-transparent: rgba(57, 255, 136, 0.08);
+
+            --text: #e7f0e9;
+            --text-muted: #87958b;
+
+            --border: rgba(57, 255, 136, 0.17);
+
+            --font: "Courier New", Courier, monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            font-family: var(--font);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+
+            background-image:
+                linear-gradient(
+                    rgba(57, 255, 136, 0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(57, 255, 136, 0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 45px 45px;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        button,
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button:focus-visible,
+        a:focus-visible {
+            outline: 2px solid var(--green);
+            outline-offset: 5px;
+        }
+
+        ::selection {
+            background: var(--green);
+            color: var(--background);
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: auto;
+        }
+
+        .green {
+            color: var(--green);
+        }
+
+        .muted {
+            color: var(--text-muted);
+        }
+
+        .section {
+            padding: 110px 0;
+        }
+
+        .section-heading {
+            margin-bottom: 45px;
+        }
+
+        .section-label {
+            color: var(--green);
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.7rem);
+            line-height: 1.25;
+        }
+
+        .section-description {
+            color: var(--text-muted);
+            margin-top: 15px;
+            max-width: 650px;
+        }
+
+        .terminal-symbol {
+            color: var(--green);
+        }
+
+        /* ========================================
+           2. BARRE DE NAVIGATION
+        ======================================== */
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+
+            background: rgba(8, 11, 10, 0.9);
+            border-bottom: 1px solid var(--border);
+
+            backdrop-filter: blur(14px);
+        }
+
+        .navbar {
+            min-height: 75px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+        }
+
+        .logo {
+            color: var(--green);
+            font-size: 1rem;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: var(--text-muted);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--green);
+        }
+
+        .menu-toggle {
+            display: none;
+
+            color: var(--green);
+            background: transparent;
+
+            border: 1px solid var(--border);
+            padding: 7px 12px;
+
+            cursor: pointer;
+        }
+
+        /* ========================================
+           3. BOUTONS
+        ======================================== */
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            padding: 12px 18px;
+
+            border: 1px solid var(--green);
+            color: var(--green);
+
+            background: transparent;
+
+            font-size: 0.9rem;
+            cursor: pointer;
+
+            transition:
+                background 0.2s,
+                color 0.2s,
+                transform 0.2s;
+        }
+
+        .button:hover {
+            background: var(--green);
+            color: var(--background);
+            transform: translateY(-2px);
+        }
+
+        .button-primary {
+            background: var(--green);
+            color: var(--background);
+            font-weight: bold;
+        }
+
+        .button-primary:hover {
+            background: #8affb6;
+            border-color: #8affb6;
+        }
+
+        /* ========================================
+           4. ACCUEIL
+        ======================================== */
+
+        .hero {
+            min-height: 100vh;
+            padding: 140px 0 80px;
+
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 65px;
+        }
+
+        .availability {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            border: 1px solid var(--border);
+            background: var(--green-transparent);
+
+            color: var(--green);
+            padding: 7px 12px;
+
+            font-size: 0.8rem;
+            margin-bottom: 25px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+
+            box-shadow: 0 0 12px var(--green);
+
+            animation: pulse 2s infinite;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.3rem, 6vw, 4.5rem);
+            line-height: 1.15;
+            letter-spacing: -2px;
+
+            margin-bottom: 25px;
+        }
+
+        .hero h1 .name {
+            color: var(--green);
+            text-shadow: 0 0 30px rgba(57, 255, 136, 0.2);
+        }
+
+        .hero-description {
+            max-width: 620px;
+
+            color: var(--text-muted);
+            font-size: 1rem;
+
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .terminal-window {
+            background: rgba(13, 18, 15, 0.95);
+
+            border: 1px solid var(--border);
+            box-shadow: 0 0 50px rgba(57, 255, 136, 0.05);
+
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 13px 16px;
+
+            background: rgba(57, 255, 136, 0.04);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .terminal-circle {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--green);
+            opacity: 0.7;
+        }
+
+        .terminal-title {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin-left: 8px;
+        }
+
+        .terminal-body {
+            padding: 25px;
+
+            font-size: 0.88rem;
+            overflow-wrap: anywhere;
+        }
+
+        .terminal-line {
+            margin-bottom: 13px;
+        }
+
+        .terminal-output {
+            color: var(--text-muted);
+            padding-left: 15px;
+            margin-bottom: 22px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 17px;
+
+            background: var(--green);
+            vertical-align: middle;
+
+            animation: blink 1s steps(2, start) infinite;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+
+            margin-top: 35px;
+        }
+
+        .stat {
+            border-left: 2px solid var(--green);
+            padding-left: 12px;
+        }
+
+        .stat strong {
+            display: block;
+            color: var(--green);
+            font-size: 1.2rem;
+        }
+
+        .stat span {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        /* ========================================
+           5. PROJETS
+        ======================================== */
+
+        .projects {
+            background: rgba(13, 18, 15, 0.5);
+            border-top: 1px solid rgba(57, 255, 136, 0.06);
+            border-bottom: 1px solid rgba(57, 255, 136, 0.06);
+        }
+
+        .project-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            margin-bottom: 30px;
+        }
+
+        .filter-button {
+            color: var(--text-muted);
+            background: transparent;
+
+            border: 1px solid var(--border);
+            padding: 8px 13px;
+
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .filter-button:hover,
+        .filter-button.active {
+            color: var(--green);
+            background: var(--green-transparent);
+            border-color: var(--green);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+
+            background: var(--surface);
+            border: 1px solid var(--border);
+
+            min-width: 0;
+
+            transition:
+                transform 0.25s,
+                border-color 0.25s,
+                background 0.25s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--green);
+            background: var(--surface-hover);
+        }
+
+        .project-card[hidden] {
+            display: none;
+        }
+
+        .project-preview {
+            min-height: 150px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(57, 255, 136, 0.09),
+                    rgba(57, 255, 136, 0.015)
+                );
+
+            border-bottom: 1px solid var(--border);
+
+            color: var(--green);
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .project-preview span {
+            opacity: 0.85;
+            text-shadow: 0 0 25px rgba(57, 255, 136, 0.3);
+        }
+
+        .project-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+
+            padding: 22px;
+        }
+
+        .project-number {
+            color: var(--green);
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+        }
+
+        .project-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .project-content p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+
+            margin-bottom: 22px;
+        }
+
+        .tag {
+            padding: 4px 8px;
+
+            background: var(--green-transparent);
+            border: 1px solid var(--border);
+
+            color: var(--green);
+            font-size: 0.7rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+
+            margin-top: auto;
+        }
+
+        .project-links a {
+            color: var(--text);
+            font-size: 0.8rem;
+        }
+
+        .project-links a:hover {
+            color: var(--green);
+        }
+
+        /* ========================================
+           6. COMPÉTENCES
+        ======================================== */
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .skill-card {
+            padding: 25px;
+
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        .skill-card h3 {
+            color: var(--green);
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-item {
+            padding: 8px 11px;
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+
+            color: var(--text-muted);
+            font-size: 0.8rem;
+
+            transition: 0.2s;
+        }
+
+        .skill-item:hover {
+            color: var(--green);
+            border-color: var(--green);
+        }
+
+        /* ========================================
+           7. À PROPOS
+        ======================================== */
+
+        .about {
+            background: rgba(13, 18, 15, 0.5);
+            border-top: 1px solid rgba(57, 255, 136, 0.06);
+            border-bottom: 1px solid rgba(57, 255, 136, 0.06);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .about-text strong {
+            color: var(--green);
+            font-weight: normal;
+        }
+
+        .about-terminal {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            padding: 25px;
+        }
+
+        .about-terminal h3 {
+            color: var(--green);
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .timeline {
+            border-left: 1px solid var(--border);
+            padding-left: 22px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: "";
+
+            position: absolute;
+            left: -27px;
+            top: 8px;
+
+            width: 9px;
+            height: 9px;
+
+            background: var(--green);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(57, 255, 136, 0.5);
+        }
+
+        .timeline-item h4 {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .timeline-item p {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* ========================================
+           8. CONTACT
+        ======================================== */
+
+        .contact-box {
+            max-width: 750px;
+            margin: auto;
+
+            text-align: center;
+
+            padding: 45px 30px;
+
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        .contact-box h2 {
+            font-size: clamp(1.7rem, 4vw, 2.5rem);
+            margin-bottom: 20px;
+        }
+
+        .contact-box p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        /* ========================================
+           9. FOOTER
+        ======================================== */
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 25px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-content p,
+        .footer-content a {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .footer-content a:hover {
+            color: var(--green);
+        }
+
+        /* ========================================
+           10. ANIMATIONS
+        ======================================== */
+
+        @keyframes blink {
+            to {
+                visibility: hidden;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.35;
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+
+            transition:
+                opacity 0.6s ease,
+                transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* ========================================
+           11. RESPONSIVE
+        ======================================== */
+
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .terminal-window {
+                max-width: 650px;
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .section {
+                padding: 75px 0;
+            }
+
+            .navbar {
+                min-height: 65px;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+
+                position: absolute;
+                top: 65px;
+                left: 0;
+                width: 100%;
+
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+
+                background: var(--background);
+                border-bottom: 1px solid var(--border);
+
+                padding: 10px 5%;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 12px 0;
+            }
+
+            .hero {
+                padding-top: 120px;
+                min-height: auto;
+            }
+
+            .hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .hero-stats {
+                gap: 10px;
+            }
+
+            .stat strong {
+                font-size: 1rem;
+            }
+
+            .stat span {
+                font-size: 0.68rem;
+            }
+
+            .projects-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-preview {
+                min-height: 120px;
+            }
+
+            .contact-box {
+                padding: 35px 20px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========================================
+         NAVIGATION
+    ========================================= -->
+
+    <header>
+        <nav class="navbar container" aria-label="Navigation principale">
+
+            <a href="#accueil" class="logo">
+                root@<span>portfolio</span>:~
+            </a>
+
+            <button
+                class="menu-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="nav-links"
+                aria-label="Ouvrir le menu"
+            >
+                [ MENU ]
+            </button>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#accueil" class="active">Accueil</a></li>
+                <li><a href="#projets">Projets</a></li>
+                <li><a href="#competences">Compétences</a></li>
+                <li><a href="#apropos">À propos</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+        </nav>
+    </header>
+
+
+    <main>
+
+        <!-- ========================================
+             ACCUEIL
+        ========================================= -->
+
+        <section class="hero" id="accueil">
+
+            <div class="container hero-grid">
+
+                <div class="hero-content reveal">
+
+                    <div class="availability">
+                        <span class="status-dot"></span>
+                        Disponible pour de nouveaux projets
+                    </div>
+
+                    <p class="section-label">
+                        <span class="terminal-symbol">$</span>
+                        whoami
+                    </p>
+
+                    <h1>
+                        Salut, moi c'est
+                        <span class="name">Menad AZOUAOU</span>.
+                        <br>
+                        Je construis le futur
+                        <span class="green">une ligne à la fois.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Étudiant développeur chez Zone01, je découvre,
+                        j'expérimente et je transforme des problèmes
+                        complexes en solutions concrètes.
+                        Bienvenue dans mon univers.
+                    </p>
+
+                    <div class="hero-buttons">
+
+                        <a href="#projets" class="button button-primary">
+                            ./voir-mes-projets
+                        </a>
+
+                        <a href="#contact" class="button">
+                            ./me-contacter
+                        </a>
+
+                    </div>
+
+                    <div class="hero-stats">
+
+                        <div class="stat">
+                            <strong>01</strong>
+                            <span>Apprendre</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>02</strong>
+                            <span>Construire</span>
+                        </div>
+
+                        <div class="stat">
+                            <strong>03</strong>
+                            <span>Progresser</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TERMINAL VISUEL : AUCUNE IMAGE NÉCESSAIRE -->
+
+                <div class="terminal-window reveal">
+
+                    <div class="terminal-header">
+
+                        <span class="terminal-circle"></span>
+                        <span class="terminal-circle"></span>
+                        <span class="terminal-circle"></span>
+
+                        <span class="terminal-title">
+                            terminal — bash
+                        </span>
+
+                    </div>
+
+                    <div class="terminal-body">
+
+                        <p class="terminal-line">
+                            <span class="green">visitor@portfolio</span>:~$
+                            whoami
+                        </p>
+
+                        <p class="terminal-output">
+                            Étudiant développeur
+                        </p>
+
+                        <p class="terminal-line">
+                            <span class="green">visitor@portfolio</span>:~$
+                            cat profile.txt
+                        </p>
+
+                        <p class="terminal-output">
+                            Curieux<br>
+                            Passionné par la technologie<br>
+                            Toujours prêt à apprendre
+                        </p>
+
+                        <p class="terminal-line">
+                            <span class="green">visitor@portfolio</span>:~$
+                            ls skills/
+                        </p>
+
+                        <p class="terminal-output">
+                            programming/ &nbsp; problem-solving/<br>
+                            teamwork/ &nbsp;&nbsp;&nbsp; learning/
+                        </p>
+
+                        <p class="terminal-line">
+                            <span class="green">visitor@portfolio</span>:~$
+                            <span class="cursor"></span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             PROJETS
+        ========================================= -->
+
+        <section class="section projects" id="projets">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <p class="section-label">
+                        <span class="terminal-symbol">01.</span>
+                        ls ./projects
+                    </p>
+
+                    <h2 class="section-title">
+                        Mes <span class="green">projets</span>
+                    </h2>
+
+                    <p class="section-description">
+                        Chaque projet est une nouvelle occasion
+                        d'apprendre, de résoudre des problèmes
+                        et de repousser mes limites.
+                    </p>
+
+                </div>
+
+
+                <!-- FILTRES DES PROJETS -->
+
+                <div class="project-filters reveal">
+
+                    <button
+                        class="filter-button active"
+                        type="button"
+                        data-filter="all"
+                        aria-pressed="true"
+                    >
+                        Tous
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        type="button"
+                        data-filter="go"
+                        aria-pressed="false"
+                    >
+                        Go
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        type="button"
+                        data-filter="web"
+                        aria-pressed="false"
+                    >
+                        Web
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        type="button"
+                        data-filter="other"
+                        aria-pressed="false"
+                    >
+                        Autres
+                    </button>
+
+                </div>
+
+
+                <div class="projects-grid">
+
+
+                    <!-- PROJET 1 -->
+
+                    <article class="project-card reveal" data-category="go">
+
+                        <div class="project-preview">
+                            <span>&lt;/&gt;</span>
+                        </div>
+
+                        <div class="project-content">
+
+                            <p class="project-number">PROJECT_001</p>
+
+                            <h3>Modélisation 3D par photogrammétrie avec une caméra à objectif unique</h3>
+
+                            <p>
+                                Présente ici le problème que tu devais
+                                résoudre, le fonctionnement du programme
+                                et les difficultés que tu as rencontrées.
+                            </p>
+
+                            <div class="tags">
+                                <span class="tag">Go</span>
+                                <span class="tag">Algorithms</span>
+                                <span class="tag">Git</span>
+                            </div>
+
+                            <div class="project-links">
+
+                                <!-- Remplace # par ton URL GitHub -->
+
+                                <a
+                                    href="#"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    data-placeholder-link
+                                >
+                                    [ GitHub ↗ ]
+                                </a>
+
+                                <a
+                                    href="#"
+                                    data-placeholder-link
+                                >
+                                    [ Détails → ]
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- PROJET 2 -->
+
+                    <article class="project-card reveal" data-category="web">
+
+                        <div class="project-preview">
+                            <span>{ Web }</span>
+                        </div>
+
+                        <div class="project-content">
+
+                            <p class="project-number">PROJECT_002</p>
+
+                            <h3>Base de donnée d’identification et de référencement des champignons (MushRealm)</h3>
+
+                            <p>
+                                Décris ton site ou ton application :
+                                son objectif, les fonctionnalités
+                                développées et ce que tu as appris.
+                            </p>
+
+                            <div class="tags">
+                                <span class="tag">HTML</span>
+                                <span class="tag">CSS</span>
+                                <span class="tag">JavaScript</span>
+                            </div>
+
+                            <div class="project-links">
+
+                                <a
+                                    href="#"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    data-placeholder-link
+                                >
+                                    [ GitHub ↗ ]
+                                </a>
+
+                                <a
+                                    href="#"
+                                    data-placeholder-link
+                                >
+                                    [ Démo → ]
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- PROJET 3 -->
+
+                    <article class="project-card reveal" data-category="other">
+
+                        <div class="project-preview">
+                            <span>[ 01 ]</span>
+                        </div>
+
+                        <div class="project-content">
+
+                            <p class="project-number">PROJECT_003</p>
+
+                            <h3>Système de contrôle d’accès par reconnaissance automatique des plaques d’immatriculation (ANPR)</h3>
+
+                            <p>
+                                Présente un autre projet significatif.
+                                Explique ta méthode de travail et
+                                comment tu as trouvé une solution.
+                            </p>
+
+                            <div class="tags">
+                                <span class="tag">Problem solving</span>
+                                <span class="tag">Teamwork</span>
+                            </div>
+
+                            <div class="project-links">
+
+                                <a
+                                    href="#"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    data-placeholder-link
+                                >
+                                    [ GitHub ↗ ]
+                                </a>
+
+                                <a
+                                    href="#"
+                                    data-placeholder-link
+                                >
+                                    [ Détails → ]
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             COMPÉTENCES
+        ========================================= -->
+
+        <section class="section" id="competences">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <p class="section-label">
+                        <span class="terminal-symbol">02.</span>
+                        cat skills.json
+                    </p>
+
+                    <h2 class="section-title">
+                        Mes <span class="green">compétences</span>
+                    </h2>
+
+                    <p class="section-description">
+                        Les outils et les connaissances que je développe
+                        progressivement au fil de ma formation.
+                    </p>
+
+                </div>
+
+
+                <div class="skills-grid">
+
+
+                    <div class="skill-card reveal">
+
+                        <h3>
+                            <span class="terminal-symbol">01 //</span>
+                            Langages
+                        </h3>
+
+                        <div class="skill-list">
+
+                            <span class="skill-item">Go</span>
+                            <span class="skill-item">HTML</span>
+                            <span class="skill-item">CSS</span>
+                            <span class="skill-item">Python</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="skill-card reveal">
+
+                        <h3>
+                            <span class="terminal-symbol">02 //</span>
+                            Outils
+                        </h3>
+
+                        <div class="skill-list">
+
+                            <span class="skill-item">Git</span>
+                            <span class="skill-item">GitHub</span>
+                            <span class="skill-item">Linux</span>
+                            <span class="skill-item">Terminal</span>
+                            <span class="skill-item">Bash</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="skill-card reveal">
+
+                        <h3>
+                            <span class="terminal-symbol">03 //</span>
+                            Méthodes
+                        </h3>
+
+                        <div class="skill-list">
+
+                            <span class="skill-item">Algorithmes</span>
+                            <span class="skill-item">Débogage</span>
+                            <span class="skill-item">Autonomie</span>
+                            <span class="skill-item">Travail d'équipe</span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             À PROPOS
+        ========================================= -->
+
+        <section class="section about" id="apropos">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <p class="section-label">
+                        <span class="terminal-symbol">03.</span>
+                        cat about.txt
+                    </p>
+
+                    <h2 class="section-title">
+                        À propos de <span class="green">moi</span>
+                    </h2>
+
+                </div>
+
+
+                <div class="about-grid">
+
+
+                    <div class="about-text reveal">
+
+                        <p>
+                            Salut ! Je suis <strong>Menad AZOUAOU</strong>,
+                            étudiant chez Zone01.
+                        </p>
+
+                        <p>
+                            J'ai choisi le développement informatique
+                            parce que j'aime comprendre les systèmes,
+                            résoudre des problèmes et créer des choses
+                            qui fonctionnent réellement.
+                        </p>
+
+                        <p>
+                            Au cours de ma formation, j'apprends à
+                            travailler de manière autonome, à chercher
+                            des solutions et à améliorer mon code.
+                        </p>
+
+                        <p>
+                            Mon objectif est de continuer à progresser,
+                            de développer des projets concrets et
+                            d'approfondir mes connaissances en
+                            <strong>machine learning!</strong>.
+                        </p>
+
+                    </div>
+
+
+                    <div class="about-terminal reveal">
+
+                        <h3>
+                            <span class="terminal-symbol">$</span>
+                            cat journey.log
+                        </h3>
+
+                        <div class="timeline">
+
+                            <div class="timeline-item">
+
+                                <h4>Début de mon parcours</h4>
+
+                                <p>
+                                    Découverte de la programmation
+                                    et des bases de l'informatique.
+                                </p>
+
+                            </div>
+
+                            <div class="timeline-item">
+
+                                <h4>Formation Zone01</h4>
+
+                                <p>
+                                    Apprentissage par la pratique,
+                                    projets et résolution de problèmes.
+                                </p>
+
+                            </div>
+
+                            <div class="timeline-item">
+
+                                <h4>Prochaine étape</h4>
+
+                                <p>
+                                    Approfondir mes compétences
+                                    et construire des projets plus ambitieux.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             CONTACT
+        ========================================= -->
+
+        <section class="section" id="contact">
+
+            <div class="container">
+
+                <div class="contact-box reveal">
+
+                    <p class="section-label">
+                        <span class="terminal-symbol">04.</span>
+                        ./contact.sh
+                    </p>
+
+                    <h2>
+                        On construit quelque chose
+                        <span class="green">ensemble ?</span>
+                    </h2>
+
+                    <p>
+                        Une question, un projet ou simplement envie
+                        d'échanger ? N'hésite pas à me contacter.
+                    </p>
+
+                    <div class="contact-links">
+
+                        <!-- REMPLACE PAR TON ADRESSE E-MAIL -->
+
+                        <a
+                            class="button button-primary"
+                            href="mailto:ton.email@example.com"
+                        >
+                            Envoyer un e-mail ↗
+                        </a>
+
+                        <!-- REMPLACE PAR TON GITHUB -->
+
+                        <a
+                            class="button"
+                            href="https://github.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            GitHub ↗
+                        </a>
+
+                        <!-- REMPLACE PAR TON LINKEDIN -->
+
+                        <a
+                            class="button"
+                            href="https://www.linkedin.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            LinkedIn ↗
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ========================================
+         FOOTER
+    ========================================= -->
+
+    <footer>
+
+        <div class="container footer-content">
+
+            <p>
+                © <span id="year"></span> Menad AZOUAOU
+                — Construit avec du code et du café.
+            </p>
+
+            <a href="#accueil">
+                <span class="green">↑</span> Retour en haut
+            </a>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ========================================
+         JAVASCRIPT
+    ========================================= -->
+
+    <script>
+
+        // Année automatique dans le footer
+
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
+
+        // Menu mobile
+
+        const menuToggle = document.querySelector(".menu-toggle");
+        const navLinks = document.querySelector(".nav-links");
+
+        menuToggle.addEventListener("click", () => {
+
+            const isOpen = navLinks.classList.toggle("open");
+
+            menuToggle.setAttribute("aria-expanded", isOpen);
+            menuToggle.setAttribute(
+                "aria-label",
+                isOpen ? "Fermer le menu" : "Ouvrir le menu"
+            );
+
+            menuToggle.textContent = isOpen ? "[ FERMER ]" : "[ MENU ]";
+
+        });
+
+
+        // Fermer le menu mobile après un clic
+
+        document.querySelectorAll(".nav-links a").forEach(link => {
+
+            link.addEventListener("click", () => {
+
+                navLinks.classList.remove("open");
+
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Ouvrir le menu");
+
+                menuToggle.textContent = "[ MENU ]";
+
+            });
+
+        });
+
+
+        // Filtres des projets
+
+        const filterButtons = document.querySelectorAll(".filter-button");
+        const projectCards = document.querySelectorAll(".project-card");
+
+        filterButtons.forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                const filter = button.dataset.filter;
+
+                // Mettre à jour le bouton actif
+
+                filterButtons.forEach(item => {
+
+                    const isActive = item === button;
+
+                    item.classList.toggle("active", isActive);
+
+                    item.setAttribute(
+                        "aria-pressed",
+                        String(isActive)
+                    );
+
+                });
+
+
+                // Filtrer les cartes
+
+                projectCards.forEach(card => {
+
+                    const category = card.dataset.category;
+
+                    const shouldShow =
+                        filter === "all" || category === filter;
+
+                    card.hidden = !shouldShow;
+
+                });
+
+            });
+
+        });
+
+
+        // Animation d'apparition au défilement
+
+        const revealElements = document.querySelectorAll(".reveal");
+
+        if ("IntersectionObserver" in window) {
+
+            const observer = new IntersectionObserver(
+                (entries, currentObserver) => {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            entry.target.classList.add("visible");
+
+                            currentObserver.unobserve(entry.target);
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+            revealElements.forEach(element => {
+                observer.observe(element);
+            });
+
+        } else {
+
+            revealElements.forEach(element => {
+                element.classList.add("visible");
+            });
+
+        }
+
+
+        // Mettre en évidence la section active dans le menu
+
+        const sections = document.querySelectorAll("main section[id]");
+        const navItems = document.querySelectorAll(".nav-links a");
+
+        if ("IntersectionObserver" in window) {
+
+            const sectionObserver = new IntersectionObserver(
+                entries => {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            navItems.forEach(link => {
+
+                                const isActive =
+                                    link.getAttribute("href") ===
+                                    "#" + entry.target.id;
+
+                                link.classList.toggle("active", isActive);
+
+                            });
+
+                        }
+
+                    });
+
+                },
+                {
+                    rootMargin: "-25% 0px -60% 0px"
+                }
+            );
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+        }
+
+
+        // Éviter les liens de démonstration qui pointent vers "#"
+
+        document.querySelectorAll("[data-placeholder-link]").forEach(link => {
+
+            link.addEventListener("click", event => {
+
+                const destination = link.getAttribute("href");
+
+                if (!destination || destination === "#") {
+
+                    event.preventDefault();
+
+                    alert(
+                        "Remplace ce lien par l'URL de ton projet GitHub " +
+                        "ou par celle de ta démonstration."
+                    );
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
